@@ -1,0 +1,121 @@
+programa Ejercicio3
+procesos
+  proceso juntarFlor (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin 
+  proceso juntarPapel(ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+  proceso RecorrerF (ES flor : numero)
+  comenzar
+    repetir 9 
+      juntarFlor(flor)
+      mover
+  fin
+  proceso RecorrerP (ES papel : numero)
+  comenzar
+    repetir 9 
+      juntarPapel(papel)
+      mover
+  fin
+areas
+  ciudad1 : AreaP(1,1,10,1)
+  ciudad5 : AreaP(21,1,30,1)
+  ciudad2 : AreaP(11,1,20,1)
+  ciudad6 : AreaP(31,1,40,1)
+  ciudad3 : AreaP(1,5,10,5)
+  ciudad7 : AreaP(21,5,30,5)
+  ciudad4 : AreaP(11,5,20,5)
+  ciudad8 : AreaP(31,5,40,5)
+robots
+  robot tipo1
+  variables
+    flor, num : numero
+  comenzar
+    flor := 0
+    derecha
+    RecorrerF(flor)
+    EnviarMensaje(1,A2)
+    EnviarMensaje(flor, A2)
+    RecibirMensaje(num, A2)
+    RecibirMensaje(flor, A2)
+    Pos(21,1)
+    RecorrerF(flor)
+    EnviarMensaje(1,A2)
+    EnviarMensaje(flor, A2)
+  fin
+  robot tipo2
+  variables
+    flor, num : numero
+  comenzar
+    RecibirMensaje(num, A1)
+    RecibirMensaje(flor, A1)
+    derecha
+    RecorrerF(flor)
+    EnviarMensaje(1,A1)
+    EnviarMensaje(flor, A1)
+    RecibirMensaje(num, A1)
+    RecibirMensaje(flor, A1)
+    Pos(31,1)
+    RecorrerF(flor)
+    Informar(flor)
+  fin
+  robot tipo3
+  variables
+    papel, num : numero
+  comenzar
+    papel := 0
+    derecha
+    RecorrerP(papel)
+    EnviarMensaje(1,B2)
+    EnviarMensaje(papel,B2)
+    RecibirMensaje(num, B2)
+    RecibirMensaje(papel, B2)
+    Pos(21,5)
+    RecorrerP(papel)
+    EnviarMensaje(1,B2)
+    EnviarMensaje(papel,B2)
+    
+  fin
+  robot tipo4
+  variables
+    papel, num : numero
+  comenzar
+    RecibirMensaje(num, B1)
+    RecibirMensaje(papel, B1)
+    derecha
+    RecorrerP(papel)
+    EnviarMensaje(1,B1)
+    EnviarMensaje(papel,B1)
+    RecibirMensaje(num, B1)
+    RecibirMensaje(papel, B1)
+    Pos(31,5)
+    RecorrerP(papel)
+    Informar(papel)
+  fin
+variables
+  A1 : tipo1
+  A2 : tipo2
+  B1 : tipo3
+  B2 : tipo4
+comenzar
+  AsignarArea(A1, ciudad1)
+  AsignarArea(A1, ciudad5)
+  AsignarArea(A2, ciudad2)
+  AsignarArea(A2, ciudad6)
+  AsignarArea(B1, ciudad3)
+  AsignarArea(B1, ciudad7)
+  AsignarArea(B2, ciudad4)
+  AsignarArea(B2, ciudad8)
+
+  Iniciar(A1, 1, 1)
+  Iniciar(A2, 11, 1)
+  Iniciar(B1, 1, 5)
+  Iniciar(B2, 11, 5)
+fin

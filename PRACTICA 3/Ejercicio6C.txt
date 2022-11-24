@@ -1,0 +1,265 @@
+programa Ejercicio6
+procesos
+  proceso juntarFlores (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso juntarPapeles (ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+  proceso juntar (ES numR : numero; ES papel : numero; ES flor : numero)
+  comenzar
+    si (numR = 1)
+      juntarFlores(flor)
+      mover
+    si (numR = 2)
+      juntarFlores(flor)
+      juntarPapeles(papel)
+      mover
+    si (numR = 3)
+      juntarPapeles(papel)
+      mover
+  fin
+areas
+  ciudad1 : AreaC(2,2,4,8)
+  ciudad2 : AreaC(5,2,8,15)
+  ciudad3 : AreaP(9,5,16,16)
+  ciudad4 : AreaP(1,20,100,20)
+  ciudad5 : AreaP(1,21,100,21)
+  ciudad6 : AreaP(1,22,100,22)
+  ciudad7 : AreaP(1,1,1,1)
+robots
+  robot tipo1
+  variables
+    flor, veces, numR, papel, Ca, Av : numero
+    seguir : boolean
+  comenzar
+    RecibirMensaje(numR, jefe)
+    seguir := V
+    repetir 2
+      repetir 6
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 8) && (Ca = 6))
+          BloquearEsquina(8,5)
+          Pos(8,5)
+          juntar(numR, papel, flor)
+          Pos(8,4)
+          LiberarEsquina(8,5)
+        juntar(numR, papel, flor)
+      derecha
+      repetir 6
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 4) && (Ca = 8))
+          BloquearEsquina(5,8)
+          Pos(5,8)
+          juntar(numR, papel, flor)
+          Pos(6,8)
+          LiberarEsquina(5,8)
+        juntar(numR, papel, flor)
+      derecha
+    EnviarMensaje(numR, jefe)
+    RecibirMensaje(Ca, jefe) 
+    Pos(1, Ca)
+    derecha
+    mientras seguir
+      Av := PosAv
+      si (Av < 100)
+        si (HayFlorEnLaBolsa)
+          depositarFlor
+          flor := flor - 1
+          mover      
+        sino
+          seguir := F
+      sino
+        seguir := F   
+      
+  fin
+  robot tipo2
+  variables
+    flor, veces, numR, papel, Ca, Av : numero
+    seguir : boolean
+  comenzar
+    RecibirMensaje(numR, jefe)
+    seguir := V
+    repetir 2
+      repetir 10
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 5) && (Ca = 7))
+          BloquearEsquina(5,8)
+          Pos(5,8)
+          juntar(numR, papel, flor)
+          Pos(5,9)
+          LiberarEsquina(5,8)
+        si ((Av = 15) && (Ca = 10))
+          BloquearEsquina(15,9)
+          Pos(15,9)
+          juntar(numR, papel, flor)
+          Pos(15,8)
+          LiberarEsquina(15,9)
+        juntar(numR, papel, flor)
+      derecha
+      repetir 10
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 9) && (Ca = 5))
+          BloquearEsquina(8,5)
+          Pos(8,5)
+          juntar(numR, papel, flor)
+          Pos(7,5)
+          LiberarEsquina(8,5)
+        si ((Av = 8) && (Ca = 15))
+          BloquearEsquina(9,15)
+          Pos(9,15)
+          juntar(numR, papel, flor)
+          Pos(10,15)
+          LiberarEsquina(9,15)
+        juntar(numR, papel, flor)
+      derecha
+    EnviarMensaje(numR, jefe)
+    RecibirMensaje(Ca, jefe) 
+    Pos(1, Ca)
+    derecha
+    mientras seguir
+      Av := PosAv
+      si (Av < 100)
+        si (HayFlorEnLaBolsa) && (HayPapelEnLaBolsa) 
+          depositarFlor
+          depositarPapel
+          flor := flor - 1
+          papel := papel - 1
+          mover 
+        sino
+          si (HayFlorEnLaBolsa)
+            depositarFlor
+            flor := flor - 1
+            mover
+          sino
+            si (HayPapelEnLaBolsa)
+              depositarPapel
+              papel := papel - 1
+              mover
+            sino
+              seguir := F
+      sino
+        seguir := F 
+  fin
+  robot tipo3
+  variables
+    flor, veces, numR, papel, Ca, Av : numero
+    seguir : boolean
+  comenzar
+    RecibirMensaje(numR, jefe)
+    seguir := V
+    repetir 2
+      repetir 7
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 9) && (Ca = 14))
+          BloquearEsquina(9,15)
+          Pos(9,15)
+          juntar(numR, papel, flor)
+          Pos(9,16)
+          LiberarEsquina(9,15)
+        juntar(numR, papel, flor)
+      derecha
+      repetir 7
+        Av := PosAv
+        Ca := PosCa
+        si ((Av = 16) && (Ca = 9))
+          BloquearEsquina(15,9)
+          Pos(15,9)
+          juntar(numR, papel, flor)
+          Pos(14,9)
+          LiberarEsquina(15,9)
+        juntar(numR, papel, flor)
+      derecha
+    EnviarMensaje(numR, jefe)
+    RecibirMensaje(Ca, jefe) 
+    Pos(1, Ca)
+    derecha
+    mientras seguir
+      Av := PosAv
+      si  (Av < 100)
+        si (HayPapelEnLaBolsa) 
+          depositarPapel
+          papel := papel - 1
+          mover
+        sino
+          seguir := F
+      sino
+        seguir := F 
+  fin
+  robot tipo4
+  variables
+    numR, primero, segundo, tercero : numero
+  comenzar  
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    RecibirMensaje(numR, *)   
+    primero := numR
+    RecibirMensaje(numR, *)   
+    segundo := numR
+    RecibirMensaje(numR, *)   
+    tercero := numR
+    si (primero = 1)
+      EnviarMensaje(20, r1)
+    sino
+      si (primero = 2)
+        EnviarMensaje(20, r2)
+      sino
+        EnviarMensaje(20, r3)
+    si (segundo = 1)
+      EnviarMensaje(21, r1)
+    sino
+      si (segundo = 2)
+        EnviarMensaje(21, r2)
+      sino
+        EnviarMensaje(21, r3)
+    si (tercero = 1)
+      EnviarMensaje(22, r1)
+    sino
+      si (tercero = 2)
+        EnviarMensaje(22, r2)
+      sino
+        EnviarMensaje(22, r3)
+  fin
+variables
+  r1 : tipo1
+  r2 : tipo2
+  r3 : tipo3
+  jefe : tipo4
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r1, ciudad2)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r2, ciudad3)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r1, ciudad4)
+  AsignarArea(r2, ciudad4)
+  AsignarArea(r3, ciudad4)
+  AsignarArea(r1, ciudad5)
+  AsignarArea(r2, ciudad5)
+  AsignarArea(r3, ciudad5)
+  AsignarArea(r1, ciudad6)
+  AsignarArea(r2, ciudad6)
+  AsignarArea(r3, ciudad6)
+  AsignarArea(jefe, ciudad7)
+  
+  Iniciar(r1, 2, 2)
+  Iniciar(r2, 5, 5)
+  Iniciar(r3, 9, 9)
+  Iniciar(jefe, 1, 1)
+fin
+
+
+
+

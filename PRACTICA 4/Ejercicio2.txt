@@ -1,0 +1,87 @@
+programa Ejercicio2
+areas
+  ciudad1 : AreaP(5,1,5,100)
+  ciudad2 : AreaP(10,1,10,100)
+  ciudad3 : AreaC(50,50,50,50)
+  ciudad4 : AreaP(11,1,11,1)
+  ciudad5 : AreaP(12,1,12,1)
+robots
+  robot tipo1
+  variables
+    papel, Av, Ca : numero
+  comenzar
+    repetir 99
+      Av := PosAv
+      Ca := PosCa
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papel := papel + 1
+          si (papel = 5)
+            BloquearEsquina(50,50)
+            Pos(50,50)
+            repetir 5
+              depositarPapel
+              papel := papel - 1
+            Pos(Av, Ca)
+            LiberarEsquina(50,50)
+      mover
+  fin
+  robot tipo2
+  variables
+    papel, Av, Ca, cantidad, terminar : numero
+    seguir : boolean
+  comenzar
+    Av := PosAv
+    Ca := PosCa
+    seguir := V
+    mientras seguir
+      Random(cantidad, 2, 5)
+      BloquearEsquina(50,50)
+      Pos(50,50)
+      si (HayPapelEnLaEsquina)
+        mientras (HayPapelEnLaEsquina)
+          tomarPapel
+          papel := papel + 1
+          si (papel = cantidad)
+            Pos(Av, Ca)
+            LiberarEsquina(50,50)
+            repetir papel
+              depositarPapel 
+              papel := papel - 1
+          sino
+            repetir papel
+              depositarPapel
+              papel := papel - 1
+            Pos(Av, Ca)
+            LiberarEsquina(50,50)
+            terminar := terminar + 1
+      sino
+        Pos(Av, Ca)
+        LiberarEsquina(50,50)
+      si (terminar = 8)
+        seguir := F
+  fin
+variables
+  r1, r2 : tipo1
+  r3, r4 : tipo2
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad4)
+  AsignarArea(r4, ciudad5)
+  AsignarArea(r1, ciudad3)
+  AsignarArea(r2, ciudad3)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, ciudad3)
+  
+  Iniciar(r1, 5, 1)
+  Iniciar(r2, 10, 1)
+  Iniciar(r3, 11, 1)
+  Iniciar(r4, 12, 1)
+fin
+    
+    
+    
+
+

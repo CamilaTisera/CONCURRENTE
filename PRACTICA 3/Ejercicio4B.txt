@@ -1,0 +1,98 @@
+programa Ejercicio4B
+procesos
+  proceso juntarFlores (ES flor : numero)
+  comenzar
+    si (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso TotalFlores (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso depositarFlores (ES flor : numero)
+  comenzar
+    si (HayFlorEnLaBolsa)
+      depositarFlor
+      flor := flor - 1
+  fin
+areas
+  ciudad1 : AreaC(10,10,10,10)
+  ciudad2 : AreaC(11,11,11,11)
+  ciudad3 : AreaP(1,1,1,1)
+  ciudad4 : AreaP(9,9,9,9)
+  ciudad5 : AreaP(9,10,9,10)
+  ciudad6 : AreaP(9,11,9,11)
+  ciudad7 : AreaP(9,12,9,12)
+robots
+  robot tipo1
+  variables
+    flor, Av, Ca, numR : numero
+    seguir : boolean
+  comenzar
+    Av := PosAv
+    Ca := PosCa
+    seguir := V
+    flor := 0
+    RecibirMensaje(numR, jefe)
+    mientras seguir
+      BloquearEsquina(10,10)
+      Pos(10,10)
+      si (HayFlorEnLaEsquina)
+        juntarFlores(flor)
+      sino
+        seguir := F
+      Pos(Av, Ca)
+      LiberarEsquina(10,10)
+      BloquearEsquina(11,11)
+      Pos(11,11)  
+      depositarFlores(flor)
+      Pos(Av, Ca)
+      LiberarEsquina(11,11)
+    EnviarMensaje(numR, jefe)
+  fin
+  robot tipo2
+  variables
+    perdi, flor, numR : numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    RecibirMensaje(numR, *)
+    RecibirMensaje(numR, *)
+    RecibirMensaje(numR, *)
+    RecibirMensaje(numR, *)
+    perdi := numR
+    Informar(perdi)
+    Pos(11,11)
+    TotalFlores(flor)
+  fin
+variables
+  r1, r2, r3, r4 : tipo1
+  jefe : tipo2
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad1)
+  AsignarArea(r3, ciudad1)
+  AsignarArea(r4, ciudad1)
+  AsignarArea(r1, ciudad2)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad2)
+  AsignarArea(r4, ciudad2)
+  AsignarArea(jefe, ciudad2)
+  AsignarArea(r1, ciudad4)
+  AsignarArea(r2, ciudad5)
+  AsignarArea(r3, ciudad6)
+  AsignarArea(r4, ciudad7)
+  AsignarArea(jefe, ciudad3)
+
+  Iniciar(r1, 9, 9)
+  Iniciar(r2, 9, 10)
+  Iniciar(r3, 9, 11)
+  Iniciar(r4, 9, 12)
+  Iniciar(jefe, 1, 1)
+fin
+  

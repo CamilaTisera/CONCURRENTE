@@ -1,0 +1,101 @@
+programa Ejercicio1
+procesos
+  proceso juntarFlor (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso juntarPapeles (ES papel : numero) 
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+  proceso DepositarFlores (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaBolsa)
+      depositarFlor
+      flor := flor - 1
+  fin
+  proceso DepositarPapeles (ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaBolsa)
+      depositarPapel
+      papel := papel - 1
+  fin
+areas
+  floreros : AreaPC(1,1,5,10)
+  papeleros : AreaPC(6,1,10,9)
+  ciudad1 : AreaP(6,10,6,10)
+  ciudad2 : AreaP(7,10,7,10)
+  ciudad3 : AreaP(8,10,8,10)
+  ciudad4 : AreaP(9,10,9,10)
+  deposito : AreaC(10,10,10,10)
+robots
+  robot tipo1
+  variables
+    flor, Av, Ca, AvAct, CaAct : numero
+  comenzar
+    AvAct := PosAv
+    CaAct := PosCa
+    repetir 5
+      Random(Av, 1, 5)
+      Random(Ca, 1, 10)
+      BloquearEsquina(Av,Ca)
+      Pos(Av,Ca) 
+      si (HayFlorEnLaEsquina)
+        juntarFlor(flor)
+      Pos(AvAct, CaAct)
+      LiberarEsquina(Av,Ca)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    DepositarFlores(flor)
+    Pos(AvAct,CaAct)
+    LiberarEsquina(10,10)
+  fin
+  robot tipo2
+  variables
+    papel, Av, Ca, AvAct, CaAct : numero
+  comenzar
+    AvAct := PosAv
+    CaAct := PosCa
+    repetir 3
+      Random(Av, 6, 10)
+      Random(Ca, 1, 9)
+      BloquearEsquina(Av,Ca)
+      Pos(Av,Ca) 
+      si (HayPapelEnLaEsquina)
+        juntarPapeles(papel)
+      Pos(AvAct, CaAct)
+      LiberarEsquina(Av,Ca)
+    BloquearEsquina(10,10)
+    Pos(10,10)
+    DepositarPapeles(papel)
+    Pos(AvAct,CaAct)
+    LiberarEsquina(10,10)
+  fin
+variables
+  f1,f2 : tipo1
+  p1,p2 : tipo2
+comenzar
+  AsignarArea(f1, floreros)
+  AsignarArea(f2, floreros)
+  AsignarArea(f1, ciudad1)
+  AsignarArea(f2, ciudad2)
+  AsignarArea(f1, deposito)
+  AsignarArea(f2, deposito)
+  
+  AsignarArea(p1, papeleros)
+  AsignarArea(p2, papeleros)
+  AsignarArea(p1, ciudad3)
+  AsignarArea(p2, ciudad4)
+  AsignarArea(p1, deposito)
+  AsignarArea(p2, deposito)
+
+  Iniciar(f1, 6, 10)
+  Iniciar(f2, 7, 10)
+  Iniciar(p1, 8, 10)
+  Iniciar(p2, 9, 10)
+fin
+      

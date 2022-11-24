@@ -1,0 +1,133 @@
+programa Ejercicio1
+procesos
+  proceso juntarFlores (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+areas
+  ciudad1 : AreaP(100,100,100,100)
+  ciudad2 : AreaPC(1,1,1,100)
+  ciudad3 : AreaPC(2,1,2,100)
+  ciudad4 : AreaPC(3,1,3,100)
+robots
+  robot tipo1
+  variables
+    flor, Av, Ca, cantidad, numR, Ca2, n, final : numero
+  comenzar
+    RecibirMensaje(numR, servidor)
+    mientras Ca < 100 
+      Av:=PosAv
+      Ca:=PosCa
+      Ca2 := Ca + 1
+      Random(cantidad, 1, 4) {Calculo el Random ??}    
+      EnviarMensaje(numR, servidor) {Enviar ID}
+      EnviarMensaje(cantidad, servidor) {Enviar cantidad}   
+      EnviarMensaje(Av, servidor) {Enviar mi Avenida actua}
+      EnviarMensaje(Ca2, servidor) {Enviar Calle siguiente}
+      {Esperar ACK}
+      RecibirMensaje(n, servidor)
+      Pos(Av, Ca2)
+      juntarFlores(flor)
+      Pos(Av, Ca)
+      repetir cantidad
+        depositarFlor
+        flor := flor - 1
+        mover
+        Ca := PosCa
+      EnviarMensaje(Ca, servidor)
+      si (Ca = 100) 
+        EnviarMensaje(n, servidor)
+  fin
+  robot tipo2
+  variables
+    ID, flor, Av, Ca, termine, cantidad, n, CaAct: numero
+    seguir : boolean
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    seguir := V
+    juntarFlores(flor)
+    mientras termine <> 3
+      repetir 3           
+        RecibirMensaje(ID, *)
+        si (ID = 1)
+          si seguir = V
+            RecibirMensaje(cantidad, r1)
+            RecibirMensaje(Av, r1)
+            RecibirMensaje(Ca, r1)
+            Pos(Av, Ca)
+            repetir cantidad
+              depositarFlor
+              flor := flor - 1
+            Pos(100,100)
+            EnviarMensaje(1, r1) 
+            RecibirMensaje(CaAct, r1) 
+            si (CaAct = 100)
+              seguir := F
+              RecibirMensaje(n, r1) 
+              termine := termine + 1
+        sino
+          si (ID = 2)  
+            si seguir = V
+              RecibirMensaje(cantidad, r2)
+              RecibirMensaje(Av, r2)
+              RecibirMensaje(Ca, r2)
+              Pos(Av, Ca)
+              repetir cantidad
+                depositarFlor
+                flor := flor - 1
+              Pos(100,100)
+              EnviarMensaje(1, r2)
+              RecibirMensaje(CaAct, r2) 
+              si (CaAct = 100)
+                seguir := F
+                RecibirMensaje(n, r2) 
+                termine := termine + 1
+          sino
+            si seguir = V
+              RecibirMensaje(cantidad, r3)
+              RecibirMensaje(Av, r3)
+              RecibirMensaje(Ca, r3)
+              Pos(Av, Ca)
+              repetir cantidad
+                depositarFlor
+                flor := flor - 1
+              Pos(100,100)
+              EnviarMensaje(1, r3)
+              RecibirMensaje(CaAct, r3) 
+              si (CaAct = 100)
+                seguir := F
+                RecibirMensaje(n, r3) 
+                termine := termine + 1
+    Informar('Termine',termine)
+  fin
+variables
+  r1, r2, r3 : tipo1
+  servidor : tipo2
+comenzar
+  AsignarArea(servidor, ciudad1)   
+  AsignarArea(servidor, ciudad2)
+  AsignarArea(servidor, ciudad3)
+  AsignarArea(servidor, ciudad4)
+  AsignarArea(r1, ciudad2)   
+  AsignarArea(r2, ciudad3)   
+  AsignarArea(r3, ciudad4)   
+  
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 2, 1)
+  Iniciar(r3, 3, 1)
+  Iniciar(servidor, 100, 100)
+fin   
+
+
+
+
+
+
+
+
+
+

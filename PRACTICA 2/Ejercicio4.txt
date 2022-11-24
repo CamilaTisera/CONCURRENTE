@@ -1,0 +1,78 @@
+programa Ejercicio4
+procesos
+  proceso juntarFlor (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso juntarPapel (ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+areas
+  ciudad1 : AreaC(25,25,75,75)
+  ciudad2 : AreaP(1,1,1,1)
+  ciudad3 : AreaP(25,1,25,1)
+  ciudad4 : AreaP(30,1,30,1)
+  ciudad5 : AreaP(35,1,35,1)
+  ciudad6 : AreaP(40,1,40,1)
+robots
+  robot tipo1
+  variables 
+    num, numR, Av2, Ca2, Av1, Ca1, flor, papel : numero
+  comenzar
+    Av1 := PosAv
+    Ca1 := PosCa
+    repetir 10
+      RecibirMensaje(num, jefe)
+      Random(Av2, 25, 75)
+      Random(Ca2, 25, 75)
+      Pos(Av2,Ca2)
+      juntarFlor(flor)
+      juntarPapel(papel)
+      Pos(Av1, Ca1)
+      EnviarMensaje(5, jefe)
+  fin
+  robot tipo2
+  variables
+    rob, num : numero
+  comenzar
+    repetir 10
+      Random(rob, 1, 4)
+      si (rob = 1)
+        EnviarMensaje(1, r1)
+      sino
+        si (rob = 2)
+          EnviarMensaje(2, r2)
+        sino
+          si (rob = 3)
+            EnviarMensaje(3, r3)
+          sino
+            EnviarMensaje(4, r4)
+      RecibirMensaje(num, *)
+  fin
+variables
+  r1, r2, r3, r4 : tipo1
+  jefe : tipo2
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad1)
+  AsignarArea(r3, ciudad1)
+  AsignarArea(r4, ciudad1)
+  AsignarArea(r1, ciudad3)
+  AsignarArea(r2, ciudad4)
+  AsignarArea(r3, ciudad5)
+  AsignarArea(r4, ciudad6)
+  AsignarArea(jefe, ciudad2)
+
+ 
+  Iniciar(r1, 25, 1)
+  Iniciar(r2, 30, 1)
+  Iniciar(r3, 35, 1)
+  Iniciar(r4, 40, 1)
+  Iniciar(jefe, 1, 1)
+fin
+      

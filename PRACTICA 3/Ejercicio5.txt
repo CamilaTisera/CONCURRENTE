@@ -1,0 +1,108 @@
+programa Ejercicio5
+procesos
+  proceso juntarPapeles (ES papel : numero)
+  comenzar
+    tomarPapel
+    papel := papel + 1
+  fin
+  proceso DepositarPapeles (ES papel : numero)
+  comenzar
+    depositarPapel
+    papel := papel - 1
+  fin
+areas
+  ciudad1 : AreaP(1,1,1,1)
+  ciudad2 : AreaP(4,1,4,100)
+  ciudad3 : AreaP(6,1,6,100)
+  ciudad4 : AreaP(8,1,8,100)
+  ciudad5 : AreaP(10,1,10,100)
+  ciudad6 : AreaC(11,11,11,11)
+robots
+  robot tipo1
+  variables
+    papel, numR, AvAct, CaAct : numero
+    seguir : boolean
+  comenzar
+    RecibirMensaje(numR, jefe)  
+    AvAct := PosAv
+    CaAct := PosCa
+    papel := 0
+    seguir := V
+    mientras seguir
+      si (AvAct <= 100)
+        BloquearEsquina(11,11)
+        Pos(11,11)
+        si (HayPapelEnLaEsquina)
+          juntarPapeles(papel)
+        sino
+          seguir := F
+        Pos(AvAct,CaAct)
+        LiberarEsquina(11,11)
+        si (HayPapelEnLaBolsa)
+          DepositarPapeles(papel)
+          mover
+        AvAct := PosAv
+        CaAct := PosCa
+    EnviarMensaje(numR, jefe)
+    EnviarMensaje(AvAct, jefe)
+  fin
+  robot tipo2
+  variables
+    AvMax, Av1, Av2, Av3, Av4, Av, numR, gane : numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    AvMax := -1
+    repetir 4
+      RecibirMensaje(numR, *)
+      si (numR = 1)
+        RecibirMensaje(Av, r1)
+        Av1 := Av
+      sino
+        si (numR = 2)
+          RecibirMensaje(Av, r2)
+          Av2 := Av
+        sino
+          si (numR = 3)
+            RecibirMensaje(Av, r3)
+            Av3 := Av
+          sino
+            RecibirMensaje(Av, r4)
+            Av4 := Av
+    si (AvMax < Av1)
+      AvMax :=  Av1
+      gane := 1
+      
+    si (AvMax < Av2)
+      AvMax :=  Av2
+      gane := 2
+    si (AvMax < Av3)
+      AvMax :=  Av3
+      gane := 3
+    si (AvMax < Av4)
+      AvMax :=  Av4
+      gane := 4
+    Informar(gane)
+  fin
+variables
+  r1, r2, r3, r4 : tipo1
+  jefe : tipo2 
+comenzar
+  AsignarArea(jefe, ciudad1)
+  AsignarArea(r1, ciudad2)
+  AsignarArea(r2, ciudad3)
+  AsignarArea(r3, ciudad4)
+  AsignarArea(r4, ciudad5)
+  AsignarArea(r1, ciudad6)
+  AsignarArea(r2, ciudad6)
+  AsignarArea(r3, ciudad6)
+  AsignarArea(r4, ciudad6)
+
+  Iniciar(r1, 4, 1)
+  Iniciar(r2, 6, 1)
+  Iniciar(r3, 8, 1)
+  Iniciar(r4, 10, 1)
+  Iniciar(jefe, 1, 1)
+fin

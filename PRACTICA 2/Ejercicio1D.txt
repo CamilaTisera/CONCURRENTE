@@ -1,0 +1,74 @@
+programa EjercicioD
+procesos
+  proceso juntarFlor (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso Recorrer (ES flor : numero)
+  comenzar
+    repetir 9
+      juntarFlor(flor)
+      mover
+  fin
+areas
+  ciudad1 : AreaP(1,1,1,10)
+  ciudad2 : AreaP(2,11,2,20)
+  ciudad3 : AreaP(3,21,3,30)
+  ciudad4 : AreaP(4,31,4,40)
+  ciudad5 : AreaP(5,41,5,50)
+  ciudad6 : AreaP(6,51,6,60)
+  ciudad7 : AreaP(2,1,2,1)
+robots
+  robot tipo1
+  variables
+    flor, numRobot : numero
+  comenzar
+    flor := 0
+    RecibirMensaje(numRobot, fiscalizador)
+    Recorrer(flor)
+    EnviarMensaje(numRobot, fiscalizador)
+    EnviarMensaje(flor, fiscalizador)
+  fin
+  robot tipo2
+  variables
+    max, numMax, flor, numRobot : numero
+  comenzar
+    max := -1
+    flor := 0
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    EnviarMensaje(3, r3)
+    EnviarMensaje(4, r4)
+    EnviarMensaje(5, r5)
+    EnviarMensaje(6, r6)
+    repetir 6
+      RecibirMensaje(numRobot, *)
+      RecibirMensaje(flor, *)
+      si (max < flor)
+        max := flor
+        numMax := numRobot
+    Informar('Robot-Ganador',numMax)
+    Informar('Cantidad', max)
+  fin
+variables
+  r1, r2, r3, r4, r5, r6 : tipo1
+  fiscalizador : tipo2
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r2, ciudad2)
+  AsignarArea(r3, ciudad3)
+  AsignarArea(r4, ciudad4)
+  AsignarArea(r5, ciudad5)
+  AsignarArea(r6, ciudad6)
+  AsignarArea(fiscalizador, ciudad7)
+  
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 2, 11)
+  Iniciar(r3, 3, 21)
+  Iniciar(r4, 4, 31)
+  Iniciar(r5, 5, 41)
+  Iniciar(r6, 6, 51)
+  Iniciar(fiscalizador, 2, 1)
+fin

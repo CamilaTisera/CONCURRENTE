@@ -1,0 +1,126 @@
+programa Ejercicio2
+procesos
+  proceso juntarFlores (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso juntarPapeles (ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+areas
+  ciudad3 : AreaP(15,1,15,1)
+  ciudad4 : AreaP(1,1,15,30)
+  ciudad5 : AreaP(17,1,31,30)
+  ciudad6 : AreaPC(16,16,16,16)
+robots
+  robot tipo1
+  variables
+    flor, veces, numR : numero
+  comenzar
+    RecibirMensaje(numR, jefe)
+    veces := 5
+    repetir 4
+      repetir veces
+        mover
+      juntarFlores(flor)
+      derecha
+      repetir veces
+        mover
+      repetir 3
+        derecha
+      veces := veces - 1
+    mover
+    juntarFlores(flor)
+    derecha
+    BloquearEsquina(16,16)
+    Pos(16,16)
+    EnviarMensaje(1,jefe)
+    Pos(15,16)
+    LiberarEsquina(16,16)
+    repetir 2 
+      derecha
+    veces := 2
+    repetir 4
+      repetir veces
+        mover
+      derecha
+      repetir veces
+        mover
+      juntarFlores(flor)
+      repetir 3
+        derecha
+      veces := veces + 1
+  fin
+  robot tipo2
+  variables
+    papel, veces, numR : numero
+  comenzar
+    RecibirMensaje(numR, jefe)
+    veces := 5
+    repetir 4
+      repetir veces
+        mover
+      juntarPapeles(papel)
+      repetir 3
+        derecha
+      repetir veces
+        mover
+      derecha
+      veces := veces - 1
+    mover
+    juntarPapeles(papel)
+    repetir 3
+      derecha
+    BloquearEsquina(16,16)
+    Pos(16,16)
+    EnviarMensaje(2,jefe)
+    Pos(17,16)
+    LiberarEsquina(16,16)
+    repetir 2 
+      derecha
+    veces := 2
+    repetir 4
+      repetir veces
+        mover
+      repetir 3
+        derecha
+      repetir veces
+        mover
+      juntarPapeles(papel)
+      derecha
+      veces := veces + 1
+  fin
+  robot tipo3
+  variables
+    numR, gane, perdi : numero
+  comenzar
+    EnviarMensaje(1, r1)
+    EnviarMensaje(2, r2)
+    RecibirMensaje(numR, *)
+    gane := numR
+    RecibirMensaje(numR, *)
+    perdi := numR
+    Informar(gane)
+  fin
+variables
+  r1 : tipo1
+  r2 : tipo2
+  jefe : tipo3
+comenzar
+  AsignarArea(r1, ciudad4)
+  AsignarArea(r2, ciudad5)
+  AsignarArea(r1, ciudad6)
+  AsignarArea(r2, ciudad6)
+  AsignarArea(jefe, ciudad3)
+
+  Iniciar(r1, 1, 1)
+  Iniciar(r2, 31, 1)
+  Iniciar(jefe, 15, 1)
+fin
+       
+       

@@ -1,0 +1,146 @@
+programa Ejercicio3
+procesos
+  proceso juntarFlor (ES flor : numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      flor := flor + 1
+  fin
+  proceso juntarPapel (ES papel : numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      papel := papel + 1
+  fin
+  proceso Centrar (E num : numero)
+  comenzar
+    repetir (num)
+      derecha
+  fin
+  proceso juntar (ES papel : numero; ES flor : numero)
+  comenzar
+    mover
+    juntarPapel(papel)
+    juntarFlor(flor)
+  fin  
+  proceso Escalon (E papel : numero; E flor : numero; ES esc : numero) 
+  comenzar
+    flor:=flor+1
+    si(papel = flor)
+      esc := esc + 1
+  fin
+areas
+  ciudad1 : AreaP(12,14,12,15)
+  ciudad2 : AreaP(13,15,13,15)
+
+  ciudad3 : AreaP(13,16,13,17) 
+  ciudad4 : AreaP(14,17,15,17)
+
+  ciudad5 : AreaP(15,18,15,20)
+  ciudad6 : AreaP(16,20,18,20)
+
+  ciudad7 : AreaP(18,21,18,24)
+  ciudad8 : AreaP(19,24,22,24)
+ 
+  ciudad9 : AreaP(17,10,17,11)
+  ciudad10 : AreaP(18,11,18,11)
+
+  ciudad11 : AreaP(18,12,18,13) 
+  ciudad12 : AreaP(19,13,20,13)
+
+  ciudad13 : AreaP(20,14,20,16)
+  ciudad14 : AreaP(21,16,23,16)
+
+  ciudad15 : AreaP(23,17,23,20)
+  ciudad16 : AreaP(24,20,27,20)
+  
+  ciudad17 : AreaP(22,6,22,7)
+  ciudad18 : AreaP(23,7,23,7)
+
+  ciudad19 : AreaP(23,8,23,9) 
+  ciudad20 : AreaP(24,9,25,9)
+
+  ciudad21 : AreaP(25,10,25,12)
+  ciudad22 : AreaP(26,12,28,12)
+
+  ciudad23 : AreaP(28,13,28,16)
+  ciudad24 : AreaP(29,16,32,16)
+  
+robots
+  robot tipo1
+  variables
+    flor, papel, num, esc : numero
+  comenzar
+    esc := 0
+    papel:=0
+    flor:=0
+    mover
+    derecha
+    mover
+    Centrar(3)
+    juntar(papel, flor)
+    mover
+    derecha
+    juntar(papel, flor)
+    mover
+    Escalon(papel, flor, esc)
+    papel:=0
+    flor:=0
+    Centrar(3)
+    repetir 2
+      juntar(papel, flor)
+    mover
+    derecha
+    repetir 2
+      juntar(papel, flor)
+    mover
+    Escalon(papel, flor, esc)
+    papel:=0
+    flor:=0
+    Centrar(3)
+    repetir 3
+      juntar(papel, flor)
+    mover
+    derecha
+    repetir 3
+      juntar(papel, flor)
+    mover
+    Escalon(papel, flor, esc)
+    Informar(esc)
+  fin
+variables
+  r1, r2, r3 : tipo1
+comenzar
+  AsignarArea(r1, ciudad1)
+  AsignarArea(r1, ciudad2)
+  AsignarArea(r1, ciudad3)
+  AsignarArea(r1, ciudad4)
+  AsignarArea(r1, ciudad5)
+  AsignarArea(r1, ciudad6)
+  AsignarArea(r1, ciudad7)
+  AsignarArea(r1, ciudad8)
+  
+  AsignarArea(r2, ciudad9)
+  AsignarArea(r2, ciudad10)
+  AsignarArea(r2, ciudad11)
+  AsignarArea(r2, ciudad12)
+  AsignarArea(r2, ciudad13)
+  AsignarArea(r2, ciudad14)
+  AsignarArea(r2, ciudad15)
+  AsignarArea(r2, ciudad16)
+
+  AsignarArea(r3, ciudad17)
+  AsignarArea(r3, ciudad18)
+  AsignarArea(r3, ciudad19)
+  AsignarArea(r3, ciudad20)
+  AsignarArea(r3, ciudad21)
+  AsignarArea(r3, ciudad22)
+  AsignarArea(r3, ciudad23)
+  AsignarArea(r3, ciudad24)
+
+  Iniciar(r1, 12,14)
+  Iniciar(r2, 17,10)
+  Iniciar(r3, 22, 6)
+fin
+
+
